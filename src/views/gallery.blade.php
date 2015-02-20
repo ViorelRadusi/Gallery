@@ -1,3 +1,7 @@
+{{ HTML::style('/packages/request/gallery/css/bootstrap.min.css')     }}
+{{ HTML::style('/packages/request/gallery/css/jquery.fileupload.css') }}
+{{ HTML::style('/packages/request/gallery/css/gallery.min.css')       }}
+
 <div class="modal-dialog big">
   <div class="modal-content">
 
@@ -23,13 +27,13 @@
                   </div>
                   <hr>
 
-                  @if($photos->count())
+                  @if($gallery->photos->count())
                     <div class="gallery">
-                      @foreach(array_chunk($photos->all(), 4) as $row)
+                      @foreach(array_chunk($gallery->photos->all(), 4) as $row)
                         <div class='row'>
                           @foreach($row as $photo)
                             <div class='col-md-3 pic'>
-                              {{ HTML::image("/galleries/$photo->imageable_type/$photo->imageable_id/thumbnail/$photo->path", $photo->path) }}
+                              {{ HTML::image("/galleries/" . \Str::slug($photo->imageable_type) . "/" . \Str::slug($photo->imageable->name) . "-" . "$photo->imageable_id/thumbnail/$photo->path", $photo->path) }}
                               <div class='edit-caption' data-id="{{ $photo->id }}" data-caption="{{ $photo->caption }}">
                                 <span class="glyphicon glyphicon-pencil {{ $photo->caption ? 'is'  : '' }}"> </span>
                               </div>
@@ -53,7 +57,7 @@
             <div role="tabpanel" class="tab-pane" id="manager">
               <hr/>
 
-              <form id="fileupload" action="" method="POST" enctype="multipart/form-data"  data-url="/admin/gallery-manager/upload/{{ get_class($gallery) }}/{{ $gallery->id }}">
+              <form id="fileupload" action="" method="POST" enctype="multipart/form-data"  data-url="/request/gallery/gallery-manager/upload/{{ get_class($gallery) }}/{{ $gallery->name }}/{{ $gallery->id }}">
                       <input type="hidden" name="_id" value="{{ $gallery->id }}">
                       <div class="row fileupload-buttonbar">
                         <div class="col-lg-7">
@@ -96,15 +100,19 @@
                     @include('gallery::tpl-upload')
                     @include('gallery::tpl-download')
 
-                    {{ HTML::script('/packages/request-gallery/js/jquery.ui.widget.js')          }}
-                    {{ HTML::script('/packages/request-gallery/js/tmpl.min.js')                  }}
-                    {{ HTML::script('/packages/request-gallery/js/load-image.min.js')            }}
-                    {{ HTML::script('/packages/request-gallery/js/canvas-to-blob.min.js')        }}
-                    {{ HTML::script('/packages/request-gallery/js/jquery.fileupload.js')         }}
-                    {{ HTML::script('/packages/request-gallery/js/jquery.fileupload-process.js') }}
-                    {{ HTML::script('/packages/request-gallery/js/jquery.fileupload-image.js')   }}
-                    {{ HTML::script('/packages/request-gallery/js/jquery.fileupload-ui.js')      }}
-                    {{ HTML::script('/packages/request-gallery/js/upload.js')                    }}
+                    {{ HTML::script('/packages/request/gallery/js/jquery.min.js')                }}
+                    {{ HTML::script('/packages/request/gallery/js/bootstrap.min.js')             }}
+                    {{ HTML::script('/packages/request/gallery/js/jquery.ui.widget.js')          }}
+                    {{ HTML::script('/packages/request/gallery/js/tmpl.min.js')                  }}
+                    {{ HTML::script('/packages/request/gallery/js/load-image.min.js')            }}
+                    {{ HTML::script('/packages/request/gallery/js/canvas-to-blob.min.js')        }}
+                    {{ HTML::script('/packages/request/gallery/js/jquery.fileupload.js')         }}
+                    {{ HTML::script('/packages/request/gallery/js/jquery.fileupload-process.js') }}
+                    {{ HTML::script('/packages/request/gallery/js/jquery.fileupload-image.js')   }}
+                    {{ HTML::script('/packages/request/gallery/js/jquery.fileupload-ui.js')      }}
+                    {{ HTML::script('/packages/request/gallery/js/upload.js')                    }}
+
+                    {{ HTML::script("/packages/request/gallery/js/gallery-manager.js")           }}
                 </div>
           </div>
       </div> <!-- gallery-tabs -->
@@ -112,4 +120,3 @@
   </div> <!-- modal content -->
 </div> <!-- modal-dialog -->
 
-{{ HTML::script("/assets/js/admin/gallery-manager.js") }}

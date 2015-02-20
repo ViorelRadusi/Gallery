@@ -10,16 +10,16 @@ class ImageGalleryController extends \BaseController {
     $this->imageGallery = $imageGallery;
   }
 
-  public function index($photo, $id) {
-    $this->imageGallery->initUploader($photo, $id);
+  public function index($collection, $photoName, $id) {
+    $this->imageGallery->initUploader($collection, $photoName, $id);
   }
 
-  public function create($photo, $id) {
-    $this->imageGallery->addPhoto($photo, $id);
+  public function create($collection, $photoName, $id) {
+    $this->imageGallery->addPhoto($collection, $photoName, $id);
   }
 
-  public function delete($photo, $id) {
-    $this->imageGallery->remove($photo, $id);
+  public function delete($collection, $photoName, $id) {
+    $this->imageGallery->remove($collection, $photoName, $id);
   }
 
   public function caption($id){
@@ -27,4 +27,3 @@ class ImageGalleryController extends \BaseController {
   }
 
 }
-

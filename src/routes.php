@@ -1,5 +1,6 @@
 <?php
-  Route::get('/gallery-manager/upload/{resource}/{id}'    , [ 'as' => 'request.gallery.index'  , 'uses' => 'Request\Gallery\PhotosController@index']);
-  Route::post('/gallery-manager/upload/{resource}/{id}'   , [ 'as' => 'request.gallery.store'  , 'uses' => 'Request\Gallery\PhotosController@create']);
-  Route::delete('/gallery-manager/upload/{resource}/{id}' , [ 'as' => 'request.gallery.update' , 'uses' => 'Request\Gallery\PhotosController@delete']);
-  Route::post('/gallery-manager/{id}/caption'             , [ 'as' => 'request.gallery.caption', 'uses' => 'Request\Gallery\PhotosController@caption']);
+
+  Route::get('/request/gallery/gallery-manager/upload/{collection}/{album}/{id}'       , [ 'as' => 'request.gallery.index'  , 'uses' => 'Request\Gallery\Controllers\ImageGalleryController@index']);
+  Route::post('/request/gallery/gallery-manager/upload/{collection}/{album}/{id}'      , [ 'as' => 'request.gallery.store'  , 'uses' => 'Request\Gallery\Controllers\ImageGalleryController@create']);
+  Route::delete('/request/gallery/gallery-manager/upload/{collection}/{resource}/{id}' , [ 'as' => 'request.gallery.delete' , 'uses' => 'Request\Gallery\Controllers\ImageGalleryController@delete']);
+  Route::post('/request/gallery/gallery-manager/{id}/caption'                          , [ 'as' => 'request.gallery.caption', 'uses' => 'Request\Gallery\Controllers\ImageGalleryController@caption']);
