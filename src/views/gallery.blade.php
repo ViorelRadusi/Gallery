@@ -1,4 +1,4 @@
-{{ HTML::style('/packages/request/gallery/css/bootstrap.min.css')     }}
+{{-- HTML::style('/packages/request/gallery/css/bootstrap.min.css')     --}}
 {{ HTML::style('/packages/request/gallery/css/jquery.fileupload.css') }}
 {{ HTML::style('/packages/request/gallery/css/gallery.min.css')       }}
 
@@ -33,7 +33,7 @@
                         <div class='row'>
                           @foreach($row as $photo)
                             <div class='col-md-3 pic'>
-                              {{ HTML::image("/galleries/" . \Str::slug($photo->imageable_type) . "/" . \Str::slug($photo->imageable->name) . "-" . "$photo->imageable_id/thumbnail/$photo->path", $photo->path) }}
+                              {{ HTML::image(Config::get("gallery::uploadPath") . \Str::slug($photo->imageable_type) . "/" . \Str::slug($photo->imageable->name) . "-" . "$photo->imageable_id/thumbnail/$photo->path", $photo->path) }}
                               <div class='edit-caption' data-id="{{ $photo->id }}" data-caption="{{ $photo->caption }}">
                                 <span class="glyphicon glyphicon-pencil {{ $photo->caption ? 'is'  : '' }}"> </span>
                               </div>
@@ -49,7 +49,7 @@
                       @endforeach
                     </div>
                   @else
-                    <div class="row text-center alert alert-warning">Nici o poza!</div>
+                    <div class="text-center alert alert-warning">No pictures!</div>
                   @endif
                 </div>
 

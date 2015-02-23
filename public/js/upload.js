@@ -10,5 +10,14 @@
     }),
 
     $("#fileupload").addClass("fileupload-processing"),
-    $.ajax({url:$("#fileupload").fileupload("option","url")
-      ,dataType:"json",context:$("#fileupload")[0]}).always(function(){return $(this).removeClass("fileupload-processing")}).done(function(e){return $(this).fileupload("option","done").call(this,$.Event("done"),{result:e})})})}).call(this);
+    $.ajax({
+      url      : $("#fileupload").fileupload("option","url"),
+      dataType : "json",
+      context  : $("#fileupload")[0]
+    }).always(function(){
+      return $(this).removeClass("fileupload-processing")
+    }).done(function(e){
+      return $(this).fileupload("option","done").call(this,$.Event("done"),{result:e})
+    });
+  })
+}).call(this);

@@ -1,6 +1,7 @@
 <?php namespace Request\Gallery;
 
-use Input, View, Config, Str;
+use Request\Gallery\Models\Rg_Photo,
+    Input, View, Config, Str;
 
 class ImageGallery {
 
@@ -10,7 +11,6 @@ class ImageGallery {
 
   protected $name, $imageableModel, $id;
 
-  protected $maxSize = 10485760 ; // 10MB = 10 * 1024 *1024
 
 
   public function initUploader($collection, $album, $id){
@@ -21,10 +21,10 @@ class ImageGallery {
       'user_dirs_path' => Str::slug($this->collection). "/" . Str::slug($this->album). "-" . $this->id . "/",
       'filename'       => $this->name,
       'script_url'     => "/request/gallery/gallery-manager/upload/$this->collection/$this->album/$this->id",
-      'upload_dir'     => public_path().'/galleries/',
-      'upload_url'     => '/galleries/',
-      'max_file_size'  => $this->maxSize,
-      'image_versions' => $this->thumbnails
+      'upload_dir'     => public_path(). Config::get('gallery::uploadPath'),
+      'upload_url'     => Config::get('gallery::uploadPath'),
+      'max_file_size'  => Config::get('gallery::maxFileSize'),
+      'image_versions' => Config::get('gallery::variations')
     ]);
   }
 
@@ -39,14 +39,15 @@ class ImageGallery {
     $caption   = Input::get('caption');
     $extension = $picture->getClientOriginalExtension();
     $size      = $picture->getClientSize();
-    $this->name =  str_random(20) . "." . $extension;
+    $this->name  = (Config::get('gallery::fileName') == 'random') ? str_random(20) : Str::slug($picture->getClientOriginalName());
+    $this->name .= "." . $extension;
 
     $this->initUploader($collection, $album, $id);
 
-    if($size < $this->maxSize) {
+    if($size < Config::get("gallery::maxFileSize")) {
       (new $collection)->find($this->id)->photos()->create([
-        'path'     => $this->name,
-        'caption'  => $caption
+        'path'    => $this->name,
+        'caption' => $caption
       ]);
     }
   }
@@ -59,15 +60,19 @@ class ImageGallery {
   }
 
   public function updateCaption($id){
-    \Photo::find($id)->update([ 'caption' => Input::get('caption') ]);
+    Rg_Photo::find($id)
+      ->update(['caption' => Input::get('caption')]);
   }
 
-  public function setThumbnails(array $thumbnails){
-    $this->thumbnails = $thumbnails;
+  public function updateCover($id){
+    $photo = Rg_Photo::find($id);
+    $photo->imageable->photos()->update(['cover' => 0]);
+    $photo->update(['cover' => 1]);
   }
 
   public function view($info){
     $gallery['gallery'] = reset($info);
     return View::make("gallery::gallery", $gallery);
   }
+
 }

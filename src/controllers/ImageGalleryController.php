@@ -26,4 +26,8 @@ class ImageGalleryController extends \BaseController {
     $this->imageGallery->updateCaption($id);
   }
 
+  public function cover($id){
+    $this->imageGallery->updateCover($id);
+  }
+
 }

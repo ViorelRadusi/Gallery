@@ -29,7 +29,6 @@ class GalleryServiceProvider extends ServiceProvider {
     $this->package('request/gallery');
 
     include __DIR__ . '/../../routes.php';
-    include __DIR__ . '/../../controllers/ImageGalleryController.php';
 
     AliasLoader::getInstance()
       ->alias("ImageGallery", "\Request\Gallery\Facades\ImageGallery");

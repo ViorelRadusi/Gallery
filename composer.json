@@ -12,6 +12,12 @@
         "illuminate/support": "4.2.*"
     },
     "autoload": {
+        "classmap" :[
+          "src/models",
+          "src/controllers",
+          "src/traits",
+          "src/migrations"
+        ],
         "psr-0": {
             "Request\\Gallery": "src/"
         }
