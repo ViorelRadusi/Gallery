@@ -3,6 +3,12 @@
 return [
 
   /**
+   *  bool
+   *  this is uses to add in the loaded page bootstrap.css and bootstrap.js if they dont exist
+   */
+  'needBootstrap' => false,
+
+  /**
    *  integer
    *  this is the max width of the uploaded image
    */

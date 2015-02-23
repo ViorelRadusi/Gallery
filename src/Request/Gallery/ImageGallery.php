@@ -1,7 +1,7 @@
 <?php namespace Request\Gallery;
 
 use Request\Gallery\Models\Rg_Photo,
-    Input, View, Config, Str;
+    Input, View, Config, Str, Session;
 
 class ImageGallery {
 
@@ -73,6 +73,11 @@ class ImageGallery {
   public function view($info){
     $gallery['gallery'] = reset($info);
     return View::make("gallery::gallery", $gallery);
+  }
+
+  public function loadBs(){
+    Session::put('request.gallery.bs', true);
+    return $this;
   }
 
 }

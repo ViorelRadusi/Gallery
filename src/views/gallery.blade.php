@@ -1,4 +1,7 @@
-{{-- HTML::style('/packages/request/gallery/css/bootstrap.min.css')     --}}
+@if(Session::has('request.gallery.bs') || Config::get("gallery::needBootstrap"))
+  {{ HTML::style('/packages/request/gallery/css/bootstrap.min.css')     }}
+@endif
+
 {{ HTML::style('/packages/request/gallery/css/jquery.fileupload.css') }}
 {{ HTML::style('/packages/request/gallery/css/gallery.min.css')       }}
 
@@ -100,8 +103,13 @@
                     @include('gallery::tpl-upload')
                     @include('gallery::tpl-download')
 
+
                     {{ HTML::script('/packages/request/gallery/js/jquery.min.js')                }}
-                    {{ HTML::script('/packages/request/gallery/js/bootstrap.min.js')             }}
+
+                    @if(Session::has('request.gallery.bs') || Config::get("gallery::needBootstrap"))
+                      {{ HTML::script('/packages/request/gallery/js/bootstrap.min.js')           }}
+                    @endif
+
                     {{ HTML::script('/packages/request/gallery/js/jquery.ui.widget.js')          }}
                     {{ HTML::script('/packages/request/gallery/js/tmpl.min.js')                  }}
                     {{ HTML::script('/packages/request/gallery/js/load-image.min.js')            }}
@@ -120,3 +128,4 @@
   </div> <!-- modal content -->
 </div> <!-- modal-dialog -->
 
+{{ Session::forget('request.gallery.bs') }}
