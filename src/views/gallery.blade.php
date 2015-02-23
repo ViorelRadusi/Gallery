@@ -60,7 +60,7 @@
             <div role="tabpanel" class="tab-pane" id="manager">
               <hr/>
 
-              <form id="fileupload" action="" method="POST" enctype="multipart/form-data"  data-url="/request/gallery/gallery-manager/upload/{{ get_class($gallery) }}/{{ $gallery->name }}/{{ $gallery->id }}">
+              <form data-maxw="{{ Config::get("gallery::maxWidth", 1300) }}" data-maxh="{{ Config::get("gallery::maxHeight", 1000) }}" id="fileupload" action="" method="POST" enctype="multipart/form-data"  data-url="/request/gallery/gallery-manager/upload/{{ get_class($gallery) }}/{{ $gallery->name }}/{{ $gallery->id }}">
                       <input type="hidden" name="_id" value="{{ $gallery->id }}">
                       <div class="row fileupload-buttonbar">
                         <div class="col-lg-7">

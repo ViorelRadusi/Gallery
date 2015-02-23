@@ -1,12 +1,20 @@
 (function(){
   $(function(){
     "use strict";
-    return $("#fileupload").fileupload
-    ({
-      url:"/upload/pages/",
-      disableImageResize:/Android(?!.*Chrome)|Opera/.test(window.navigator&&navigator.userAgent),
-      imageMaxWidth:1300,
-      imageMaxHeight:1200
+    var maxW = $("#fileupload").data("maxw");
+    var maxH = $("#fileupload").data("maxh");
+
+    return $("#fileupload").fileupload({
+      disableImageResize: false,
+      autoUpload    : false,
+      imageMaxWidth : maxW,
+      imageMaxHeight: maxH
+    }).bind('fileuploadsubmit', function(e, data) {
+          //
+      var caption = data.context.find(':input');
+      data.formData = {
+        'caption' : caption.val()
+      }
     }),
 
     $("#fileupload").addClass("fileupload-processing"),

@@ -1,6 +1,6 @@
 <?php namespace Request\Gallery;
 
-use Request\Gallery\Models\Rg_Photo,
+use Request\Gallery\Models\Rg_photo,
     Input, View, Config, Str, Session;
 
 class ImageGallery {
@@ -60,12 +60,12 @@ class ImageGallery {
   }
 
   public function updateCaption($id){
-    Rg_Photo::find($id)
+    Rg_photo::find($id)
       ->update(['caption' => Input::get('caption')]);
   }
 
   public function updateCover($id){
-    $photo = Rg_Photo::find($id);
+    $photo = Rg_photo::find($id);
     $photo->imageable->photos()->update(['cover' => 0]);
     $photo->update(['cover' => 1]);
   }
